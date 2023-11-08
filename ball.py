@@ -12,11 +12,22 @@ class Ball:
 
     def draw(self):
         self.image.draw(self.x, self.y)
+        # 디버그용 바운딩박스 그리기
+        draw_rectangle(*self.get_bb())  # 튜플을 풀어헤쳐서 분리햇 ㅓ인자로 제공 (*< 이거)
 
     def update(self):
         self.x += self.velocity * 100 * game_framework.frame_time
 
         if self.x < 25 or self.x > 1600 - 25:
+            game_world.remove_object(self)
+
+    # fill here
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
+
+    def handle_collision(self,groub,other):
+        if groub == 'boy:ball':
             game_world.remove_object(self)
 
     # fill here

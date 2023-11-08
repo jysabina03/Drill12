@@ -206,5 +206,13 @@ class Boy:
     def draw(self):
         self.state_machine.draw()
         self.font.draw(self.x-10, self.y + 50, f'{self.ball_count:02d}', (255, 255, 0))
+        # 디버그용 바운딩박스 그리기
+        draw_rectangle(*self.get_bb())
 
     # fill here
+    def get_bb(self):   # 바운딩박스
+        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+
+    def handle_collision(self,groub,other):
+        if groub == 'boy:ball':
+            self.ball_count+=1

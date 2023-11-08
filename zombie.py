@@ -20,7 +20,6 @@ animation_names = ['Walk']
 
 class Zombie:
     images = None
-
     def load_images(self):
         if Zombie.images == None:
             Zombie.images = {}
@@ -46,12 +45,16 @@ class Zombie:
 
 
     def draw(self):
+
+        draw_rectangle(*self.get_bb())
         if self.dir < 0:
             Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 200, 200)
         else:
             Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200, 200)
 
 
+    def get_bb(self):   # 바운딩박스
+        return self.x - 90, self.y - 100, self.x + 90, self.y + 100
+
     def handle_event(self, event):
         pass
-
