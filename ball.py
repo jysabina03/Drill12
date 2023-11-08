@@ -10,6 +10,7 @@ class Ball:
             Ball.image = load_image('ball21x21.png')
         self.x, self.y, self.velocity = x, y, velocity
 
+
     def draw(self):
         self.image.draw(self.x, self.y)
         # 디버그용 바운딩박스 그리기
@@ -28,6 +29,8 @@ class Ball:
 
     def handle_collision(self,groub,other):
         if groub == 'boy:ball':
+            game_world.remove_object(self)
+        if groub == 'zombie:ball':
             game_world.remove_object(self)
 
     # fill here

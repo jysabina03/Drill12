@@ -1,7 +1,7 @@
 # 이것은 각 상태들을 객체로 구현한 것임.
 
 from pico2d import get_time, load_image, load_font, clamp, SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, SDLK_LEFT, SDLK_RIGHT, \
-    draw_rectangle
+    draw_rectangle, close_canvas
 from ball import Ball
 import game_world
 import game_framework
@@ -191,11 +191,13 @@ class Boy:
         self.ball_count = 10
 
 
-    def fire_ball(self):
+    def fire_ball(self, zombies=None):
         if self.ball_count > 0:
             self.ball_count -= 1
             ball = Ball(self.x, self.y, self.face_dir*10)
             game_world.add_object(ball)
+
+            game_world.add_collision_pair('zombie:ball', None, ball)
 
     def update(self):
         self.state_machine.update()
@@ -216,3 +218,5 @@ class Boy:
     def handle_collision(self,groub,other):
         if groub == 'boy:ball':
             self.ball_count+=1
+        if groub == 'boy:zombie':
+            game_framework.quit()
